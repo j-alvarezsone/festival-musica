@@ -3,6 +3,7 @@ const gulpSass = require('gulp-sass');
 const dartSass = require('dart-sass');
 const imagemin = require('gulp-imagemin');
 const notify = require('gulp-notify');
+const webp = require('gulp-webp');
 
 const sass = gulpSass(dartSass);
 
@@ -29,6 +30,13 @@ function imagenes() {
     .pipe(notify({ message: '"Imagen Minificada"' }));
 }
 
+function versionWebp() {
+  return src(paths.imagenes)
+    .pipe(webp())
+    .pipe(dest('./build/img'))
+    .pipe(notify({ message: 'Versión webP lista' }));
+}
+
 function watchArchivos() {
   watch(paths.scss, css); // * = La carpeta actual - ** = Todos los archivos con esa extensión
   // watch(paths.js, javascript);
@@ -38,4 +46,4 @@ exports.css = css;
 exports.imagenes = imagenes;
 exports.watchArchivos = watchArchivos;
 
-exports.default = series(css, imagenes, watchArchivos);
+exports.default = series(css, imagenes, versionWebp, watchArchivos);
