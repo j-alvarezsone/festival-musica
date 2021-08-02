@@ -8,6 +8,12 @@ const concat = require('gulp-concat');
 
 const sass = gulpSass(dartSass);
 
+// Utilidades CSS
+const autoprefixer = require('autoprefixer');
+const postcss = require('gulp-postcss');
+const cssnano = require('cssnano');
+const sourcemaps = require('gulp-sourcemaps');
+
 const paths = {
   imagenes: 'src/img/**/*',
   scss: 'src/scss/**/*.scss',
@@ -16,11 +22,10 @@ const paths = {
 
 function css() {
   return src(paths.scss)
-    .pipe(
-      sass({
-        outputStyle: 'compressed',
-      }),
-    )
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(postcss([autoprefixer(), cssnano()]))
+    .pipe(sourcemaps.write('.'))
     .pipe(dest('./build/css'));
 }
 
