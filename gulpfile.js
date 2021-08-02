@@ -26,7 +26,7 @@ function imagenes() {
   return src(paths.imagenes)
     .pipe(imagemin())
     .pipe(dest('./build/img'))
-    .pipe(notify({ message: 'Imagen Minificada' }));
+    .pipe(notify({ message: '"Imagen Minificada"' }));
 }
 
 function watchArchivos() {
